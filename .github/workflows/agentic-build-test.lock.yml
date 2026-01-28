@@ -38,7 +38,7 @@ jobs:
   activation:
     needs: pre_activation
     if: needs.pre_activation.outputs.activated == 'true'
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs:
@@ -463,7 +463,7 @@ jobs:
           if-no-files-found: ignore
 
   pre_activation:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs:
