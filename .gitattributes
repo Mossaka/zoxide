@@ -3,3 +3,5 @@
 /init.fish eol=lf text
 /templates/*.txt eol=lf text
 /zoxide.plugin.zsh eol=lf text
+
+.github/workflows/*.lock.yml linguist-generated=true merge=ours
