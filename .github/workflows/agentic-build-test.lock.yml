@@ -129,7 +129,7 @@ jobs:
       - name: Install GitHub Copilot CLI
         run: /opt/gh-aw/actions/install_copilot_cli.sh 0.0.400
       - name: Install awf binary
-        run: bash /opt/gh-aw/actions/install_awf_binary.sh v0.13.1
+        run: bash /opt/gh-aw/actions/install_awf_binary.sh v0.13.2
       - name: Determine automatic lockdown mode for GitHub MCP server
         id: determine-automatic-lockdown
         env:
@@ -214,7 +214,7 @@ jobs:
               staged: false,
               allowed_domains: ["crates.io","static.crates.io","index.crates.io","github.com","api.github.com","static.rust-lang.org"],
               firewall_enabled: true,
-              awf_version: "v0.13.1",
+              awf_version: "v0.13.2",
               awmg_version: "v0.0.94",
               steps: {
                 firewall: "squid"
@@ -344,7 +344,7 @@ jobs:
         timeout-minutes: 20
         run: |
           set -o pipefail
-          sudo -E awf --enable-chroot --container-workdir "${GITHUB_WORKSPACE}" --allow-domains api.business.githubcopilot.com,api.enterprise.githubcopilot.com,api.github.com,api.githubcopilot.com,api.individual.githubcopilot.com,crates.io,github.com,host.docker.internal,index.crates.io,raw.githubusercontent.com,registry.npmjs.org,static.crates.io,static.rust-lang.org --log-level info --proxy-logs-dir /tmp/gh-aw/sandbox/firewall/logs --enable-host-access --image-tag 0.13.1 --agent-image act \
+          sudo -E awf --enable-chroot --container-workdir "${GITHUB_WORKSPACE}" --allow-domains api.business.githubcopilot.com,api.enterprise.githubcopilot.com,api.github.com,api.githubcopilot.com,api.individual.githubcopilot.com,crates.io,github.com,host.docker.internal,index.crates.io,raw.githubusercontent.com,registry.npmjs.org,static.crates.io,static.rust-lang.org --log-level info --proxy-logs-dir /tmp/gh-aw/sandbox/firewall/logs --enable-host-access --image-tag 0.13.2 --agent-image act \
             -- 'source /opt/gh-aw/actions/sanitize_path.sh "$GH_AW_TOOL_BINS$(find /opt/hostedtoolcache -maxdepth 4 -type d -name bin 2>/dev/null | tr '\''\n'\'' '\'':'\'')$PATH" && /usr/local/bin/copilot --add-dir /tmp/gh-aw/ --log-level all --log-dir /tmp/gh-aw/sandbox/agent/logs/ --add-dir "${GITHUB_WORKSPACE}" --disable-builtin-mcps --allow-all-tools --allow-all-paths --share /tmp/gh-aw/sandbox/agent/logs/conversation.md --prompt "$(cat /tmp/gh-aw/aw-prompts/prompt.txt)"${GH_AW_MODEL_DETECTION_COPILOT:+ --model "$GH_AW_MODEL_DETECTION_COPILOT"}' \
             2>&1 | tee /tmp/gh-aw/agent-stdio.log
         env:
